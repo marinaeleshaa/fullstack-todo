@@ -1,9 +1,6 @@
-@import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @theme inline {
   --color-background: var(--background);
@@ -12,15 +9,205 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    /* Light theme - Beautiful blues and sophisticated grays */
+    --background: 210 20% 98%; /* Light blue-gray background */
+    --foreground: 222 84% 5%; /* Almost black text */
+    --card: 0 0% 100%; /* Pure white cards */
+    --card-foreground: 222 84% 5%; /* Almost black */
+    --popover: 0 0% 100%; /* Pure white */
+    --popover-foreground: 222 84% 5%; /* Almost black */
+    --primary: 221 83% 53%; /* Beautiful blue primary */
+    --primary-foreground: 210 40% 98%; /* Light text on blue */
+    --secondary: 210 40% 96%; /* Light gray secondary */
+    --secondary-foreground: 222 47% 11%; /* Dark gray text */
+    --muted: 210 40% 96%; /* Light gray muted */
+    --muted-foreground: 215 16% 47%; /* Medium gray text */
+    --accent: 210 40% 96%; /* Light gray accent */
+    --accent-foreground: 222 47% 11%; /* Dark gray text */
+    --destructive: 0 84% 60%; /* Red for destructive actions */
+    --destructive-foreground: 210 40% 98%; /* Light text */
+    --border: 214 32% 91%; /* Light gray borders */
+    --input: 214 32% 91%; /* Light gray inputs */
+    --ring: 221 83% 53%; /* Blue focus ring */
+    --success: 142 76% 36%; /* Green for success */
+    --success-foreground: 210 40% 98%; /* Light text */
+    --warning: 38 92% 50%; /* Orange for warnings */
+    --warning-foreground: 210 40% 98%; /* Light text */
+    --chart-1: 221 83% 53%; /* Blue */
+    --chart-2: 142 76% 36%; /* Green */
+    --chart-3: 262 83% 58%; /* Purple */
+    --chart-4: 38 92% 50%; /* Orange */
+    --chart-5: 336 75% 40%; /* Pink */
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    /* Dark theme - Deep blacks and elegant grays */
+    --background: 224 71% 4%; /* Very dark blue-black */
+    --foreground: 210 40% 98%; /* Almost white text */
+    --card: 224 71% 4%; /* Dark card background */
+    --card-foreground: 210 40% 98%; /* Light text on cards */
+    --popover: 224 71% 4%; /* Dark popover */
+    --popover-foreground: 210 40% 98%; /* Light text */
+    --primary: 217 91% 60%; /* Bright blue primary */
+    --primary-foreground: 222 84% 5%; /* Dark text on blue */
+    --secondary: 217 33% 17%; /* Dark gray secondary */
+    --secondary-foreground: 210 40% 98%; /* Light text */
+    --muted: 217 33% 17%; /* Dark gray muted */
+    --muted-foreground: 215 20% 65%; /* Medium gray text */
+    --accent: 217 33% 17%; /* Dark gray accent */
+    --accent-foreground: 210 40% 98%; /* Light text */
+    --destructive: 0 63% 31%; /* Dark red */
+    --destructive-foreground: 210 40% 98%; /* Light text */
+    --border: 217 33% 17%; /* Dark gray borders */
+    --input: 217 33% 17%; /* Dark gray inputs */
+    --ring: 217 91% 60%; /* Blue focus ring */
+    --success: 142 76% 36%; /* Green for success */
+    --success-foreground: 210 40% 98%; /* Light text */
+    --warning: 38 92% 50%; /* Orange for warnings */
+    --warning-foreground: 222 84% 5%; /* Dark text */
+    --chart-1: 217 91% 60%; /* Blue */
+    --chart-2: 142 76% 36%; /* Green */
+    --chart-3: 262 83% 58%; /* Purple */
+    --chart-4: 38 92% 50%; /* Orange */
+    --chart-5: 336 75% 40%; /* Pink */
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  html {
+    @apply scroll-smooth;
+  }
+  
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  
+  /* Custom scrollbar styling */
+  ::-webkit-scrollbar {
+    @apply w-2;
+  }
+  
+  ::-webkit-scrollbar-track {
+    @apply bg-muted/20;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    @apply bg-muted-foreground/30 rounded-full;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted-foreground/50;
+  }
+  
+  /* Enhanced focus styles */
+  :focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+  
+  /* Smooth theme transitions */
+  * {
+    transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+                border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+                color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+/* Enhanced utility classes */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  /* Blue gradient utilities */
+  .bg-gradient-primary {
+    @apply bg-gradient-to-r from-blue-600 via-blue-500 to-blue-700;
+  }
+  
+  .bg-gradient-primary-soft {
+    @apply bg-gradient-to-br from-blue-50 via-blue-25 to-transparent;
+  }
+  
+  .bg-gradient-card {
+    @apply bg-gradient-to-br from-card via-card to-accent/20;
+  }
+  
+  /* Enhanced shadow utilities */
+  .shadow-soft {
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.07), 
+                0 2px 4px -2px rgb(0 0 0 / 0.05);
+  }
+  
+  .shadow-medium {
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 
+                0 4px 6px -4px rgb(0 0 0 / 0.1);
+  }
+  
+  .shadow-glow {
+    box-shadow: 0 0 20px hsl(221 83% 53% / 0.15);
+  }
+  
+  .dark .shadow-glow {
+    box-shadow: 0 0 25px hsl(217 91% 60% / 0.2);
+  }
+  
+  /* Glass morphism effect */
+  .glass {
+    @apply bg-card/80 backdrop-blur-md border border-border/50;
+  }
+  
+  .glass-strong {
+    @apply bg-card/90 backdrop-blur-lg border border-border/60;
+  }
+  
+  /* Text gradient utilities */
+  .text-gradient-primary {
+    @apply bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent;
+  }
+  
+  .text-gradient-muted {
+    @apply bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent;
+  }
+  
+  /* Hover effects */
+  .hover-lift {
+    @apply transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-medium;
+  }
+  
+  .hover-glow {
+    @apply transition-all duration-200 hover:shadow-glow;
+  }
+  
+  /* Status color utilities */
+  .status-success {
+    @apply bg-green-50 text-green-700 border-green-200;
+  }
+  
+  .dark .status-success {
+    @apply bg-green-950/50 text-green-400 border-green-800/50;
+  }
+  
+  .status-warning {
+    @apply bg-amber-50 text-amber-700 border-amber-200;
+  }
+  
+  .dark .status-warning {
+    @apply bg-amber-950/50 text-amber-400 border-amber-800/50;
+  }
+  
+  .status-error {
+    @apply bg-red-50 text-red-700 border-red-200;
+  }
+  
+  .dark .status-error {
+    @apply bg-red-950/50 text-red-400 border-red-800/50;
+  }
 }

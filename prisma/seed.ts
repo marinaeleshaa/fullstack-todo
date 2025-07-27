@@ -9,7 +9,7 @@
 //     data: Array.from({ length: 25 }, () => ({
 //       title: faker.string.alpha({ length: { min: 6, max: 20 } }),
 //       body: faker.lorem.words(80),
-//       user_id: faker.database.mongodbObjectId(),
+//       user_id: "user_123", //
 //       // ✅ required field
 //       completed: false,
 //     })),

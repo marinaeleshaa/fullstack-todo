@@ -1,41 +1,30 @@
-import { PrismaClient } from "@prisma/client";
 import { faker } from "@faker-js/faker";
+import { PrismaClient } from "@prisma/client";
+
 const prisma = new PrismaClient();
 
-// ! npx prisma db seed => Run this command to seed the database
-
-
 async function main() {
-  // todo => Create 25 todo items with random data
-  const todos = await prisma.todo.createMany({
+  // 2. Seed todos with user_id
+  await prisma.todo.createMany({
     data: Array.from({ length: 25 }, () => ({
-     title : faker.book.title(),
-     body: faker.lorem.words({ min: 10, max: 40 }),
-
+      title: faker.string.alpha({ length: { min: 6, max: 20 } }),
+      body: faker.lorem.words(80),
+      user_id: faker.database.mongodbObjectId(),
+      // ✅ required field
+      completed: false,
     })),
   });
-
-  // todo => Create 25 todo items with random data
-  // const user = await prisma.user.createMany({
-  //   data: Array.from({ length: 25 }, () => ({
-  //     email: faker.internet.email(),
-  //     name: faker.person.firstName(),
-  //     address: {
-  //       street: faker.location.street(),
-  //       city: faker.location.city(),
-  //       state: faker.location.state(),
-  //       zip: faker.location.zipCode(),
-  //     },
-  //   })),
-  // });
-
 }
 
 main()
-  .catch(async (e) => {
-    console.error(e);
-    process.exit(1);
+  .then(() => {
+    console.log("Seeding done");
+    prisma.$disconnect();
   })
-  .finally(async () => {
-    await prisma.$disconnect();
+  .catch((err) => {
+    console.error(err);
+    prisma.$disconnect();
+    process.exit(1);
   });
+
+// ! npx prisma db seed => Run this command to seed the database

@@ -62,9 +62,9 @@ const Header = ({ userId }: HeaderProps) => {
           <AddTodoForm userId={userId} />
 
           {/* Mobile Add Button */}
-          <Button size="sm" variant="outline" className="sm:hidden">
+          {/* <Button size="sm" variant="outline" className="sm:hidden">
             <PlusCircle className="h-4 w-4" />
-          </Button>
+          </Button> */}
 
           {/* Theme Toggle */}
           <ModeToggle />
